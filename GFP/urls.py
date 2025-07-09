@@ -20,20 +20,20 @@ from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
 from upload import views
-from upload.views import CFP_app
+from upload.views import extrair_dados
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('index', permanent=True)),
-    path('index/', views.CFP, name='index'),
-    path('editar_ajax/', views.editar_image_ajax, name='editar_image_ajax'),
-    path('login/', views.Login, name='login'),
-    path('perfil/', views.Perfil, name='perfil'),
+    path('index/', views.index, name='index'),
+    path('editar_boleto_ajax/', views.editar_boleto_ajax, name='editar_boleto_ajax'),
+    path('login_view/', views.login_view, name='login_view'),
+    path('perfil/', views.perfil, name='perfil'),
     path('editar_boleto/<int:id>/', views.editar_boleto, name='editar_boleto'),
-    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
-    path('register/', views.Register, name='register'),
-    path('cfp_app/', views.CFP_app , name='cfp_app'),
+    path('logout/', LogoutView.as_view(next_page='login_view'), name='logout'),
+    path('register_view/', views.register_view, name='register_view'),
+    path('extrair_dados/', views.extrair_dados , name='extrair_dados'),
     path('ComoFunc/', views.ComoFunciona, name='ComoFunciona')
 ]
 if settings.DEBUG:

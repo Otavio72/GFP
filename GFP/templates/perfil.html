@@ -17,16 +17,16 @@
             </a>
         </div>
         <div id="cabecalho_button">
-            <a class="cabecalho_link" href="{% url 'cfp_app' %}">Testar</a>
+            <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
             <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
             {% if user.is_authenticated %}
-                <form id="form_perfil" method="POST" action="{% url 'login' %}">
+                <form id="form_perfil" method="POST" action="{% url 'login_view' %}">
                     {% csrf_token %}
                     <button id="btn_logout" type="submit">Logout</button>
                 </form>
             {% else %}
-                <a class="cabecalho_link" href="{% url 'login' %}">Login</a>
-                <a class="cabecalho_link" href="{% url 'register' %}">Register</a>
+                <a class="cabecalho_link" href="{% url 'login_view' %}">Login</a>
+                <a class="cabecalho_link" href="{% url 'register_view' %}">Register</a>
             {% endif %}
         </div>
     </div>

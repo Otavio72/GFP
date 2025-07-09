@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
-from .models import Image, TIPOS, UserProfile
+from .models import Image, tipo_conta, UserProfile
 from .forms import ContaEImagemForm, ImageForm, UserProfileForm
 from .OCR import OCR
 from decimal import Decimal
@@ -16,7 +16,7 @@ from django.contrib import messages
 import os
 
 
-def CFP(request):
+def index(request):
     return render(request, 'index.html')
 
 
@@ -61,7 +61,7 @@ def editar_boleto(request, id):
 
 
 @login_required
-def CFP_app(request):
+def extrair_dados(request):
     boleto_texto = None
     ocr_data = None
     ocr_valor = None
@@ -69,7 +69,7 @@ def CFP_app(request):
 
     if request.method == 'POST':
        form = ContaEImagemForm(request.POST, request.FILES)
-       tipo = request.POST.get('escolha')
+       tipo_conta = request.POST.get('escolha')
        
        if form.is_valid():
             imagem = form.save(commit=False)
@@ -78,7 +78,7 @@ def CFP_app(request):
             
             caminho_imagem = imagem.image.path
 
-            ocr = OCR(caminho_imagem,tipo)
+            ocr = OCR(caminho_imagem,tipo_conta)
             ocr_data, ocr_valor = ocr.pegar_coordenadas()
             
             if ocr_data == "" or ocr_valor == "":
@@ -86,11 +86,11 @@ def CFP_app(request):
                     imagem.image.delete(save=False)
                 imagem.delete()
                 messages.error(request, "Não conseguimos extrair os dados do boleto. Tente novamente com uma imagem de melhor qualidade.")
-                return redirect('cfp_app')
+                return redirect('extrair_dados')
             
-            ocr_valorf = Decimal(ocr_valor.replace("R$","").strip().replace(",", "."))
+            valor_decimal = Decimal(ocr_valor.replace("R$","").strip().replace(",", "."))
             imagem.boleto_data = datetime.strptime(ocr_data, "%d/%m/%Y").date()
-            imagem.boleto_valor = ocr_valorf
+            imagem.boleto_valor = valor_decimal
             imagem.save()
 
             if os.path.isfile(caminho_imagem):
@@ -102,7 +102,7 @@ def CFP_app(request):
         form = ContaEImagemForm()
     
     dados = Image.objects.filter(user=request.user).values('boleto_data', 'boleto_valor', 'escolha')
-    return render(request, 'cfp_app.html', {
+    return render(request, 'extrair_dados.html', {
         'form':form,
         'ocr_data': ocr_data,
         'ocr_valorf': ocr_valorf,
@@ -114,12 +114,12 @@ def ComoFunciona(request):
     return render(request, 'ComoFunc.html')
 
 
-def Login(request):
+def login_view(request):
     if request.method == 'POST':
         form = CustomLoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(request, user)
+            login(request, user) # funcao do django
             return redirect('index')
     else:
         form = CustomLoginForm()
@@ -127,19 +127,19 @@ def Login(request):
     return render(request, 'login.html', {'form': form})
 
 
-def Register(request):
+def register_view(request):
     if request.method == 'POST':
         form = CadastroForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')
+            return redirect('login_view')
     else:
         form = CadastroForm()
     return render(request, 'register.html', {'form': form})
 
 
 @login_required
-def Perfil(request):
+def perfil(request):
     usuario = request.user
     imagens = Image.objects.filter(user=request.user)
     
@@ -158,13 +158,13 @@ def Perfil(request):
     return render(request, 'perfil.html', {
         'usuario': usuario,
         'imagens': imagens,
-        'TIPOS': TIPOS,
+        'tipo_conta': tipo_conta,
         'form': form,
     })
 
 
 @login_required
-def editar_image_ajax(request, image_id):
+def editar_boleto_ajax(request, image_id):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         image_id = request.POST.get('image_id')
         image = get_object_or_404(Image, id=image_id,user=request.user)

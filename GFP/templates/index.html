@@ -13,7 +13,7 @@
             </div>
 
             <div id="cabecalho_button">
-                <a class="cabecalho_link" href="{% url 'cfp_app' %}">Testar</a>
+                <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
                 <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
             
                 {% if user.is_authenticated %}
@@ -25,8 +25,8 @@
                     </form>
                 
                 {% else %}
-                    <a class="cabecalho_link" href="{% url 'login' %}">Login</a>
-                    <a class="cabecalho_link" href="{% url 'register' %}">Register</a>
+                    <a class="cabecalho_link" href="{% url 'login_view' %}">Login</a>
+                    <a class="cabecalho_link" href="{% url 'register_view' %}">Register</a>
                 {% endif %}
             </div>
         </div>
@@ -48,7 +48,7 @@
                     permitindo que você visualize e controle seus pagamentos de forma simples e eficiente.
                     Edite, apague ou consulte os boletos enviados a qualquer momento, e tenha total controle sobre suas finanças, tudo em um único lugar.
                 </p>
-                <a href="{% url 'cfp_app' %}"><button class="btn">Testar</button></a>
+                <a href="{% url 'extrair_dados' %}"><button class="btn">Testar</button></a>
             </div>
 
             <div class="conteudo_img_box">
