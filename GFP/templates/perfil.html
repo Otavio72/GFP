@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Perfil</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/perfil.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="cabecalho">
+        <div id="logo_box">
+            <a href="{% url 'index' %}">
+                <img id="logo" src="{% static 'img/logo.png' %}" alt="">
+            </a>
+        </div>
+        <div id="cabecalho_button">
+            <a class="cabecalho_link" href="{% url 'cfp_app' %}">Testar</a>
+            <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
+            {% if user.is_authenticated %}
+                <form id="form_perfil" method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <button id="btn_logout" type="submit">Logout</button>
+                </form>
+            {% else %}
+                <a class="cabecalho_link" href="{% url 'login' %}">Login</a>
+                <a class="cabecalho_link" href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+
+    
+    <div class="perfil_box">
+        <div class="perfil">
+            <div class="img_box">
+                <h2>Perfil de: {{ usuario.username }}</h2>
+
+                {% if usuario.userprofile.profile_pics %}
+                    <img class="imgredondo" src="{{ usuario.userprofile.profile_pics.url }}" alt="Foto de perfil">
+                {% else %}
+                    <img class="imgredondo" src="/media/profile_pics/default.jpg" alt="Imagem específica">     
+                {% endif %}
+            </div>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div style="display: none;">
+                    {{ form.profile_pics }}
+                </div>
+                
+                <div class="perfil_btn_box">
+                    <button id="perfil_btn" class="btn" type="button" onclick="document.getElementById('fileInput').click();">Escolher</button>
+
+                    <button id="perfil_btn" class="btn" type="submit">Atualizar</button>
+                </div>
+            </form>
+
+
+            <div  class="perfil_text">
+                
+                <p>Nome: {{ usuario.username }}</p>
+                <p>Email: {{ usuario.email }}</p>
+                <p>Entrou em: {{ usuario.date_joined|date:"d/m/Y H:i" }}</p>
+            </div>
+
+        </div>
+    </div>
+
+
+        <div class="boleto-box">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    {% for img in imagens %}
+                    <div class="swiper-slide">
+                        <div id="boleto-{{ img.id }}" class="boleto-item">
+                            <p><strong>Tipo:</strong> <span class="tipo">{{ img.escolha }}</span></p>
+                            <p><strong>Data:</strong> <span class="data">{{ img.boleto_data }}</span></p>
+                            <p><strong>Valor:</strong> R$ <span class="valor">{{ img.boleto_valor }}</span></p>
+
+                            <button class="btn btn-secondary" onclick="abrirModal({{ img.id }})">Editar</button>
+
+                            <div id="modal-{{ img.id }}" class="modal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">Editar Boleto</h3>
+                                            <button type="button" class="btn-close" onclick="fecharModal({{ img.id }})" aria-label="Close">❌</button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <form id="form-{{ img.id }}" method="POST" action="{% url 'editar_boleto' img.id %}" class="edit-form" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="image_id" value="{{ img.id }}">
+                                                <input type="hidden" name="action_type" id="action_type" value="edit">
+
+                                                <label><strong>Tipo:</strong></label>
+                                                <select id="form_edit_escolha" name="escolha">
+                                                    {% for key, value in TIPOS %}
+                                                        <option value="{{ key }}" {% if img.escolha == key %}selected{% endif %}>{{ value }}</option>
+                                                    {% endfor %}
+                                                </select><br>
+
+                                                <label><strong>Data:</strong></label>
+                                                <input type="date" id="form_edit_data" name="boleto_data" value="{{ img.boleto_data }}"><br>
+
+                                                <label><strong>Valor:</strong></label>
+                                                <input type="number" id="form_edit_valor" step="0.01" name="boleto_valor" value="{{ img.boleto_valor }}"><br>
+                                                
+                                                <div class="btn_box">
+                                                    <button type="submit" id="btn_salvar" class="btn">Salvar</button>
+                                                    <button type="submit" id="btn_apagar" class="btn" onclick="apagarBoleto()">Apagar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    
+
+    <footer class="rodape">
+        <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
+        <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>
+    </footer> 
+</body>
+</html>

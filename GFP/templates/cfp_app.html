@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'js/cfp_app.js' %}"></script>
+    
+    <title>GFP</title>
+</head>
+<body>
+    
+    <div class="cabecalho">
+            
+        <div id="logo_box">
+            <a href="{% url 'index' %}" ><img id="logo" src="{% static 'img/logo.png' %}" alt="" width="150" height="150">
+            </a> 
+        </div>
+
+        <div id="cabecalho_button">
+            <a class="cabecalho_link" href="{% url 'cfp_app' %}">Testar</a>
+            <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
+        
+            {% if user.is_authenticated %}
+            <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
+                {% csrf_token %}
+                <button id="btn_perfil" type="submit">
+                    Perfil
+                </button>
+          </form>
+            
+            {% else %}
+                <a class="cabecalho_link" href="{% url 'login' %}">Login</a>
+                <a class="cabecalho_link" href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
+    
+    </div>
+
+
+    <div class="conteudo_box">
+        <div class="conteudo_text_box">
+            <h2 class="conteudo_text">Envio de Boleto para OCR</h2>
+            <h4 class="conteudo_text">Aqui é onde a mágica acontece!</h4>
+        
+            <p class="conteudo_text">
+                Clique em Escolher arquivo, selecione o seu boleto, escolha a provedora de serviço e clique em Enviar. 
+                O sistema irá processar automaticamente os dados do boleto e, em seguida, os resultados serão exibidos nos gráficos abaixo.
+                Prepare-se para visualizar tudo de forma clara e organizada!
+            </p>
+        </div>
+
+        {% if message %}
+            <div>
+                {{ message }}
+            </div>
+
+        {% else %}
+            <div class="forms_box">
+                <form id="uploadForm" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="file" name="fileInput" id="fileInput" style="display: none;">
+
+                    <button type="submit" class="btn">Enviar</button>
+                </form>
+        {% endif %}
+        
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div id="message">
+                    <div id="hint_error" class="swiper-hint">{{ message }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+            
+        </div>
+
+            <div class="conteudo_grafico_box">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                            
+                        <div class="swiper-slide">
+                                <canvas id="graficoPizza"></canvas>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <canvas id="graficoRadar"></canvas>
+                            </div>
+
+                            <div class="swiper-slide">
+                                <canvas id="graficoLinhas"></canvas>
+                            </div>
+                    </div>
+                </div>
+        </div>
+ 
+        <div id="hint_container">
+            <div class="swiper-hint">Arraste para o Lado</div>
+        </div>
+
+        {{ dados|json_script:"dados-json" }}
+
+        <footer class="rodape">
+            <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
+            <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>
+        </footer> 
+
+        </div>
+</body>
+</html>
+

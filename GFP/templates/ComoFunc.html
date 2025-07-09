@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <title>Como Funciona</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    <body>
+        
+        <div class="cabecalho">
+            
+            <div id="logo_box">
+                <a href="{% url 'index' %}" ><img id="logo" src="{% static 'img/logo.png' %}" alt="" width="150" height="150">
+                </a> 
+            </div>
+
+            <div id="cabecalho_button">
+                <a class="cabecalho_link" href="{% url 'cfp_app' %}">Testar</a>
+                <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
+            
+                {% if user.is_authenticated %}
+                <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
+                    {% csrf_token %}
+                    <button id="btn_perfil" type="submit">
+                        Perfil
+                    </button>
+              </form>
+                
+                {% else %}
+                    <a class="cabecalho_link" href="{% url 'login' %}">Login</a>
+                    <a class="cabecalho_link" href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+        
+        </div>
+
+
+        <div class="conteudo_box">
+            
+
+            <div class="conteudo_text_box">
+                <h2 class="conteudo_text">Como Funciona ?</h2>
+                
+                <p class="conteudo_text">
+                    Ficou curioso para saber como tudo isso é possível? Nosso sistema é baseado em três tecnologias principais que trabalham juntas para tornar a gestão de boletos mais prática e eficiente:
+                    
+                    <li>
+                        Página Web (Front-End): A interface onde você envia seus boletos e visualiza os dados extraídos. Desenvolvida em HTML, CSS e JavaScript, ela garante uma navegação simples e intuitiva.
+                    </li>
+                    <br>
+
+                    <li>
+                        Django (Back-End): A estrutura por trás do sistema, escrita em Python, que gerencia a lógica do aplicativo, autenticação e comunicação com o banco de dados, garantindo um desempenho rápido e seguro.
+                    </li>
+                    <br>
+                    
+                    <li>
+                        OCR (Reconhecimento Óptico de Caracteres): A tecnologia que escaneia os boletos, extrai os dados importantes como valor e vencimento, e os organiza de forma automática para você.
+                    </li>
+                    <br>
+                    Essas três tecnologias se combinam para criar uma experiência fluida e eficiente, fazendo o trabalho pesado por você.
+                </p>
+            </div>
+
+            <div id="ComoFunciona_img_box" class="conteudo_img_box">
+                <img  id="ComoFunciona_img" class="conteudo_img"  src="{% static 'img/diagrama.png' %}" alt="">
+                
+            </div>
+
+        </div>
+
+        <footer class="rodape">
+            <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
+            <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>
+        </footer> 
+
+    </body>
+</html>

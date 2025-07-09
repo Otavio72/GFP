@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+  </head>
+  <body>
+        <div class="cabecalho">
+            <div id="logo_box">
+                <a href="{% url 'index' %}" ><img id="logo" src="{% static 'img/logo.png' %}" alt="">
+                </a> 
+            </div>
+            <div id="cabecalho_button">
+                    <a class="cabecalho_link" href="{% url 'login' %}">Login</a>
+                    <a class="cabecalho_link" href="{% url 'register' %}">Register</a>
+            </div>
+        </div>
+
+    <div class="wallpaper_grande">
+            
+        <div class="login_box">
+            <h1>Log in</h1>
+            
+            <form class="login_form" method ='POST'>
+              {% csrf_token %}
+              {{ form.username }}
+              {{ form.password }}
+              <div class="login_button_container"> 
+                <button type="submit" class="btn">Login</button>
+              </div>
+
+            </form>
+
+            <div class="registro_link">
+                <h4>Nao é membro ? <a href="{% url 'register' %}">Registre-se</a></h4>
+                
+            </div>
+        </div>
+    </div>
+
+        <footer class="rodape">
+            <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
+            <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>
+        </footer> 
+  
+</body>
+</html>

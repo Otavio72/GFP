@@ -1,0 +1,29 @@
+# Ambiente virtual
+.env/
+
+# Arquivos compilados do Python
+__pycache__/
+*.py[cod]
+
+# Banco de dados
+db.sqlite3
+
+# Arquivos temporários
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+
+# Subpastas de cache do Python
+**/__pycache__/
+
+# Configurações do VS Code
+.vscode/
+
+# Arquivos do Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Mídia e uploads
+/media/

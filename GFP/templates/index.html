@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <title>GFP</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    <body>
+        
+        <div class="cabecalho">
+            <div id="logo_box">
+                <a href="{% url 'index' %}" ><img id="logo" src="{% static 'img/logo.png' %}" alt="">
+                </a> 
+            </div>
+
+            <div id="cabecalho_button">
+                <a class="cabecalho_link" href="{% url 'cfp_app' %}">Testar</a>
+                <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
+            
+                {% if user.is_authenticated %}
+                    <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
+                        {% csrf_token %}
+                        <button id="btn_perfil" type="submit">
+                            Perfil
+                        </button>
+                    </form>
+                
+                {% else %}
+                    <a class="cabecalho_link" href="{% url 'login' %}">Login</a>
+                    <a class="cabecalho_link" href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </head>
+
+        <div class="conteudo_box">
+            
+            <div class="conteudo_img_box">
+                <video class="conteudo_img" autoplay loop muted src="{% static 'img/capa1.mp4' %}"></video>
+            </div>
+
+            <div class="conteudo_text_box">
+                <h2 class="conteudo_text">Gestão de Boletos Simplificada</h2>
+                <p class="conteudo_text">
+                    Com o nosso sistema, enviar seus boletos e acompanhar suas finanças nunca foi tão fácil. 
+                    Utilizamos tecnologia de OCR (Reconhecimento Óptico de Caracteres) para extrair automaticamente os dados do boleto, como valor, 
+                    vencimento. 
+                    Esses dados são organizados em gráficos interativos, 
+                    permitindo que você visualize e controle seus pagamentos de forma simples e eficiente.
+                    Edite, apague ou consulte os boletos enviados a qualquer momento, e tenha total controle sobre suas finanças, tudo em um único lugar.
+                </p>
+                <a href="{% url 'cfp_app' %}"><button class="btn">Testar</button></a>
+            </div>
+
+            <div class="conteudo_img_box">
+                <video class="conteudo_img" autoplay loop muted src="{% static 'img/capa2.mp4' %}"></video>
+        </div>
+
+        <div class="conteudo_text_box">
+            <h2 class="conteudo_text">Como Funciona ?</h2>
+            <p class="conteudo_text">    
+                Ficou curioso para saber como tudo isso é possível? Nosso sistema usa três tecnologias principais para facilitar sua vida: uma página web intuitiva, 
+                o Django para gerenciar os dados, e o OCR que extrai automaticamente as informações dos boletos. 
+                Tudo isso se une para proporcionar uma experiência rápida e eficiente.
+            </p>
+            
+            <a href="{% url 'ComoFunciona' %}"><button class="btn">Como Funciona ?</button></a>
+        </div>
+
+        <div class="conteudo_img_box">
+            <video class="conteudo_img" autoplay loop muted src="{% static 'img/capa3.mp4' %}"></video>
+        </div>
+        </div>
+
+        <footer class="rodape">
+            <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
+            <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>
+        </footer> 
+    </body>
+</html>
