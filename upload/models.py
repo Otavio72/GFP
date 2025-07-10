@@ -10,12 +10,12 @@ tipo_conta = [
 ]
 
 
-class Image(models.Model):
-    image = models.ImageField(upload_to='boletos/')
+class Imagem(models.Model):
+    imagem = models.ImageField(upload_to='boletos/')
     description = models.TextField(null=True, blank=True)
-    escolha = models.CharField(max_length=50, choices=tipo_conta, default='CPFL')
+    tipo_conta = models.CharField(max_length=50, choices=tipo_conta, default='CPFL')
     boleto_data = models.DateField(max_length=10, null=True, blank=True)
-    boleto_valor = models.DecimalField(max_length=10,decimal_places=2,max_digits=6, null=True, blank=True)
+    boleto_valor = models.DecimalField(decimal_places=2,max_digits=6, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

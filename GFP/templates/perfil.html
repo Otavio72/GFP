@@ -5,8 +5,7 @@
     <title>Perfil</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/perfil.js' %}"></script>
+
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
@@ -18,7 +17,7 @@
         </div>
         <div id="cabecalho_button">
             <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
-            <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
+            <a class="cabecalho_link" href="{% url 'como_funciona' %}">Como Funciona ?</a>
             {% if user.is_authenticated %}
                 <form id="form_perfil" method="POST" action="{% url 'login_view' %}">
                     {% csrf_token %}
@@ -71,12 +70,12 @@
 
 
         <div class="boleto-box">
-            <div class="swiper mySwiper">
+            <div class="swiper Swiper_perfil">
                 <div class="swiper-wrapper">
                     {% for img in imagens %}
                     <div class="swiper-slide">
                         <div id="boleto-{{ img.id }}" class="boleto-item">
-                            <p><strong>Tipo:</strong> <span class="tipo">{{ img.escolha }}</span></p>
+                            <p><strong>Tipo:</strong> <span class="tipo">{{ img.tipo_conta }}</span></p>
                             <p><strong>Data:</strong> <span class="data">{{ img.boleto_data }}</span></p>
                             <p><strong>Valor:</strong> R$ <span class="valor">{{ img.boleto_valor }}</span></p>
 
@@ -97,9 +96,9 @@
                                                 <input type="hidden" name="action_type" id="action_type" value="edit">
 
                                                 <label><strong>Tipo:</strong></label>
-                                                <select id="form_edit_escolha" name="escolha">
-                                                    {% for key, value in TIPOS %}
-                                                        <option value="{{ key }}" {% if img.escolha == key %}selected{% endif %}>{{ value }}</option>
+                                                <select id="form_edit_escolha" name="tipo_conta">
+                                                    {% for key, value in tipo_conta %}
+                                                        <option value="{{ key }}" {% if img.tipo_conta == key %}selected{% endif %}>{{ value }}</option>
                                                     {% endfor %}
                                                 </select><br>
 
@@ -132,5 +131,16 @@
         <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
         <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>
     </footer> 
+
+    <script>
+        function apagarBoleto(){
+            document.getElementById('action_type').value = 'delete';
+            document.getElementById("form-{{ img.id }}").submit();
+        }
+        document.getElementById("form-{{ img.id }}").addEventListener("submit", function(event){
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/perfil.js' %}"></script>
 </body>
 </html>

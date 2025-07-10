@@ -20,7 +20,6 @@ from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
 from upload import views
-from upload.views import extrair_dados
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -34,7 +33,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='login_view'), name='logout'),
     path('register_view/', views.register_view, name='register_view'),
     path('extrair_dados/', views.extrair_dados , name='extrair_dados'),
-    path('ComoFunc/', views.ComoFunciona, name='ComoFunciona')
+    path('como_funciona/', views.como_funciona, name='como_funciona')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

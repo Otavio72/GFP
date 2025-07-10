@@ -4,7 +4,7 @@
     <head>
         <title>GFP</title>
         <link rel="stylesheet" href="{% static 'style.css' %}">
-    <body>
+    
         
         <div class="cabecalho">
             <div id="logo_box">
@@ -14,7 +14,7 @@
 
             <div id="cabecalho_button">
                 <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
-                <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
+                <a class="cabecalho_link" href="{% url 'como_funciona' %}">Como Funciona ?</a>
             
                 {% if user.is_authenticated %}
                     <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
@@ -31,6 +31,8 @@
             </div>
         </div>
     </head>
+
+    <body>
 
         <div class="conteudo_box">
             
@@ -63,7 +65,7 @@
                 Tudo isso se une para proporcionar uma experiência rápida e eficiente.
             </p>
             
-            <a href="{% url 'ComoFunciona' %}"><button class="btn">Como Funciona ?</button></a>
+            <a href="{% url 'como_funciona' %}"><button class="btn">Como Funciona ?</button></a>
         </div>
 
         <div class="conteudo_img_box">

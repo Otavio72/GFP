@@ -1,5 +1,5 @@
 from django import forms
-from .models import Image, UserProfile
+from .models import Imagem, UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -13,15 +13,15 @@ TIPOS = [
 
 
 class ContaEImagemForm(forms.ModelForm):
-    escolha = forms.ChoiceField(
+    tipo_conta = forms.ChoiceField(
     choices=TIPOS,
     widget=forms.Select,
     required=True
     )
 
     class Meta:
-        model = Image
-        fields = ['image','escolha']
+        model = Imagem
+        fields = ['imagem','tipo_conta']
 
 
 class CadastroForm(UserCreationForm):
@@ -40,10 +40,10 @@ class CustomLoginForm(AuthenticationForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder':'Digite sua Senha'}))
 
 
-class ImageForm(forms.ModelForm):
+class ImagemForm(forms.ModelForm):
     class Meta:
-        model = Image
-        fields = ['image','escolha','boleto_data','boleto_valor']
+        model = Imagem
+        fields = ['imagem','tipo_conta','boleto_data','boleto_valor']
 
 
 class UserProfileForm(forms.ModelForm):

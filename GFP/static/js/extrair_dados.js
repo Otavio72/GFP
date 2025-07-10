@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Verifica se a seção existe antes de continuar
-  const dadosElement = document.getElementById('dados-json');
+  const dadosElement = document.getElementById('dados_extraidos');
   if (!dadosElement) return;
 
   const dados = JSON.parse(dadosElement.textContent);
@@ -8,13 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const agrupado = {};
   dados.forEach(item => {
-    const nome = item.escolha;
+    const nome = item.tipo_conta;
     const valor = parseFloat(item.boleto_valor);
     agrupado[nome] = (agrupado[nome] || 0) + valor;
   });
 
   // Inicializa Swiper
-  const swiper = new Swiper('.swiper', {
+  const swiper = new Swiper('.Swiper_extrair_dados', {
     loop: true,
     slidesPerView: 1,
     spaceBetween: 0,
@@ -72,12 +72,15 @@ function initCharts(dados, agrupado) {
     }
   });
 
+console.log('AGRUPADO antes do radar', agrupado);
+console.log('labels antes do radar', labels);
   // Gráfico Radar
   new Chart(ctxRadar, {
     type: 'radar',
     data: {
       labels,
       datasets: [{
+        label: 'Valores',
         data: valores,
         backgroundColor: 'rgba(255, 180, 0, 0.4)',
         borderColor: '#8a0303',
@@ -100,17 +103,17 @@ function initCharts(dados, agrupado) {
   });
 
   // Gráfico Linhas
-  const agrupadoPorEscolha = {};
+  const agrupadoPorTipo_conta= {};
   dados.forEach(item => {
-    const nome = item.escolha;
+    const nome = item.tipo_conta;
     const data = item.boleto_data;
     const valor = parseFloat(item.boleto_valor);
 
-    if (!agrupadoPorEscolha[nome]) {
-      agrupadoPorEscolha[nome] = [];
+    if (!agrupadoPorTipo_conta[nome]) {
+      agrupadoPorTipo_conta[nome] = [];
     }
 
-    agrupadoPorEscolha[nome].push({ data, valor });
+    agrupadoPorTipo_conta[nome].push({ data, valor });
   });
 
   const todasDatas = [...new Set(dados.map(item => item.boleto_data))].sort();
@@ -119,7 +122,7 @@ function initCharts(dados, agrupado) {
   const datasets = [];
   let corIndex = 0;
 
-  for (const [nome, valores] of Object.entries(agrupadoPorEscolha)) {
+  for (const [nome, valores] of Object.entries(agrupadoPorTipo_conta)) {
     const valorPorData = Object.fromEntries(valores.map(v => [v.data, v.valor]));
     const dadosOrdenados = todasDatas.map(data => valorPorData[data] || 0);
 

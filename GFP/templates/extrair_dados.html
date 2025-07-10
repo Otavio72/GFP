@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="{% static 'style.css' %}">
-    <script src="{% static 'js/extrair_dados.js' %}"></script>
+
     
     <title>GFP</title>
 </head>
@@ -23,7 +21,7 @@
 
         <div id="cabecalho_button">
             <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
-            <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
+            <a class="cabecalho_link" href="{% url 'como_funciona' %}">Como Funciona ?</a>
         
             {% if user.is_authenticated %}
             <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
@@ -54,21 +52,13 @@
             </p>
         </div>
 
-        {% if message %}
-            <div>
-                {{ message }}
-            </div>
 
-        {% else %}
             <div class="forms_box">
                 <form id="uploadForm" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <input type="file" name="fileInput" id="fileInput" style="display: none;">
-
                     <button type="submit" class="btn">Enviar</button>
                 </form>
-        {% endif %}
         
     {% if messages %}
         <div class="messages">
@@ -83,7 +73,7 @@
         </div>
 
             <div class="conteudo_grafico_box">
-                <div class="swiper">
+                <div class="swiper Swiper_extrair_dados">
                     <div class="swiper-wrapper">
                             
                         <div class="swiper-slide">
@@ -105,7 +95,7 @@
             <div class="swiper-hint">Arraste para o Lado</div>
         </div>
 
-        {{ dados|json_script:"dados-json" }}
+        {{ dados_extraidos|json_script:"dados_extraidos" }}
 
         <footer class="rodape">
             <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
@@ -113,6 +103,9 @@
         </footer> 
 
         </div>
+        <script src="{% static 'js/extrair_dados.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
 

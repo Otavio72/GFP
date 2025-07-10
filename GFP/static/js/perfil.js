@@ -1,13 +1,3 @@
- var swiper = new Swiper(".mySwiper", {
-    navigation:{
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-    spaceBetween: 10,
-    slidesPerView: 1,
-    loop: true,
-});
-
 function abrirModal(id) {
             let modal = document.getElementById("modal-" + id);
             modal.classList.add("show");
@@ -20,7 +10,7 @@ function abrirModal(id) {
             modal.style.display = "none";
         }
 
-        var swiper = new Swiper(".mySwiper", {
+        var swiper = new Swiper(".Swiper_perfil", {
             navigation: {
                 nextEl: ".swiper-button-next",
                 prevEl: ".swiper-button-prev",
@@ -35,18 +25,6 @@ function abrirModal(id) {
                         modal.classList.remove("show");
                         modal.style.display = "none";
                     });
-
                 }
             }
         });
-
-        function apagarBoleto(){
-            document.getElementById('action_type').value = 'delete';
-
-            document.getElementById("form-{{ img.id }}").submit();
-
-        }
-
-        document.getElementById("form-{{ img.id }}").addEventListener("submit", function(event){
-
-        })

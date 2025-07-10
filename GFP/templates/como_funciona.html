@@ -4,7 +4,10 @@
     <head>
         <title>Como Funciona</title>
         <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    
     <body>
+
         
         <div class="cabecalho">
             
@@ -15,7 +18,7 @@
 
             <div id="cabecalho_button">
                 <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
-                <a class="cabecalho_link" href="{% url 'ComoFunciona' %}">Como Funciona ?</a>
+                <a class="cabecalho_link" href="{% url 'como_funciona' %}">Como Funciona ?</a>
             
                 {% if user.is_authenticated %}
                 <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
@@ -40,8 +43,8 @@
             <div class="conteudo_text_box">
                 <h2 class="conteudo_text">Como Funciona ?</h2>
                 
-                <p class="conteudo_text">
-                    Ficou curioso para saber como tudo isso é possível? Nosso sistema é baseado em três tecnologias principais que trabalham juntas para tornar a gestão de boletos mais prática e eficiente:
+                <ul class="conteudo_text">
+                    <p>Ficou curioso para saber como tudo isso é possível? Nosso sistema é baseado em três tecnologias principais que trabalham juntas para tornar a gestão de boletos mais prática e eficiente:</p>
                     
                     <li>
                         Página Web (Front-End): A interface onde você envia seus boletos e visualiza os dados extraídos. Desenvolvida em HTML, CSS e JavaScript, ela garante uma navegação simples e intuitiva.
@@ -58,7 +61,7 @@
                     </li>
                     <br>
                     Essas três tecnologias se combinam para criar uma experiência fluida e eficiente, fazendo o trabalho pesado por você.
-                </p>
+                </ul>
             </div>
 
             <div id="ComoFunciona_img_box" class="conteudo_img_box">

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
-from .models import Image, tipo_conta, UserProfile
-from .forms import ContaEImagemForm, ImageForm, UserProfileForm
+from .models import Imagem, tipo_conta, UserProfile
+from .forms import ContaEImagemForm, ImagemForm, UserProfileForm
 from .OCR import OCR
 from decimal import Decimal
 from datetime import datetime
@@ -25,19 +25,19 @@ def editar_boleto(request, id):
     print("POST Data:", request.POST) 
 
     try:
-        image = Image.objects.get(id=id)
+        imagem = Imagem.objects.get(id=id)
     
-    except Image.DoesNotExist:
+    except Imagem.DoesNotExist:
         return HttpResponse("Boleto não encontrado", status=404)
 
     if request.method == 'POST':
-        escolha = request.POST.get('escolha')
+        tipo_conta = request.POST.get('tipo_conta')
         data = request.POST.get('boleto_data')
         valor = request.POST.get('boleto_valor')
         action_type = request.POST.get('action_type')
 
         if action_type == 'delete':
-            image.delete()
+            imagem.delete()
             return redirect('perfil')
 
         try:
@@ -50,68 +50,68 @@ def editar_boleto(request, id):
         except(ValueError, Decimal.InvalidOperatiom):
             return HttpResponse("Valor inválido", status=400)
 
-        image.escolha = escolha
-        image.boleto_data = data
-        image.boleto_valor = valor
-        image.save()
+        imagem.tipo_conta = tipo_conta
+        imagem.boleto_data = data
+        imagem.boleto_valor = valor
+        imagem.save()
 
         return redirect('perfil')
     else:
-        return render(request, "perfil.html", {'image':image})
+        return render(request, "perfil.html", {'imagem':imagem})
 
 
 @login_required
 def extrair_dados(request):
-    boleto_texto = None
+    #boleto_texto = None
     ocr_data = None
     ocr_valor = None
-    ocr_valorf = None
+    ocr_valor_final = None
 
     if request.method == 'POST':
        form = ContaEImagemForm(request.POST, request.FILES)
-       tipo_conta = request.POST.get('escolha')
+       tipo_conta = request.POST.get('tipo_conta')
        
        if form.is_valid():
             imagem = form.save(commit=False)
             imagem.user = request.user
             imagem.save()
             
-            caminho_imagem = imagem.image.path
+            caminho_imagem = imagem.imagem.path
 
             ocr = OCR(caminho_imagem,tipo_conta)
             ocr_data, ocr_valor = ocr.pegar_coordenadas()
             
             if ocr_data == "" or ocr_valor == "":
-                if imagem.image:
-                    imagem.image.delete(save=False)
+                if imagem.imagem:
+                    imagem.imagem.delete(save=False)
                 imagem.delete()
                 messages.error(request, "Não conseguimos extrair os dados do boleto. Tente novamente com uma imagem de melhor qualidade.")
                 return redirect('extrair_dados')
             
-            valor_decimal = Decimal(ocr_valor.replace("R$","").strip().replace(",", "."))
+            ocr_valor_final = Decimal(ocr_valor.replace("R$","").strip().replace(",", "."))
             imagem.boleto_data = datetime.strptime(ocr_data, "%d/%m/%Y").date()
-            imagem.boleto_valor = valor_decimal
+            imagem.boleto_valor = ocr_valor_final
             imagem.save()
 
-            if os.path.isfile(caminho_imagem):
-                os.remove(caminho_imagem)
-                imagem.image = None
-                imagem.save()
+            #if os.path.isfile(caminho_imagem):
+             #   os.remove(caminho_imagem)
+              #  imagem.imagem = None
+               # imagem.save()
 
     else:
         form = ContaEImagemForm()
     
-    dados = Image.objects.filter(user=request.user).values('boleto_data', 'boleto_valor', 'escolha')
+    dados_extraidos = Imagem.objects.filter(user=request.user).values('boleto_data', 'boleto_valor', 'tipo_conta')
     return render(request, 'extrair_dados.html', {
         'form':form,
         'ocr_data': ocr_data,
-        'ocr_valorf': ocr_valorf,
-        'dados': list(dados)
+        'ocr_valor_final': ocr_valor_final,
+        'dados_extraidos': list(dados_extraidos)
         })
 
 
-def ComoFunciona(request):
-    return render(request, 'ComoFunc.html')
+def como_funciona(request):
+    return render(request, 'como_funciona.html')
 
 
 def login_view(request):
@@ -141,7 +141,7 @@ def register_view(request):
 @login_required
 def perfil(request):
     usuario = request.user
-    imagens = Image.objects.filter(user=request.user)
+    imagens = Imagem.objects.filter(user=request.user)
     
     profile, created = UserProfile.objects.get_or_create(user=request.user)
 
@@ -164,11 +164,11 @@ def perfil(request):
 
 
 @login_required
-def editar_boleto_ajax(request, image_id):
+def editar_boleto_ajax(request, imagem_id):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        image_id = request.POST.get('image_id')
-        image = get_object_or_404(Image, id=image_id,user=request.user)
-        form = ImageForm(request.POST,request.FILES, instance=image)
+        #imagem_id = request.POST.get('image_id')
+        imagem = get_object_or_404(Imagem, id=imagem_id,user=request.user)
+        form = ImagemForm(request.POST,request.FILES, instance=imagem)
         if form.is_valid():
             form.save()
             return JsonResponse({'status':'success'})
@@ -178,12 +178,12 @@ def editar_boleto_ajax(request, image_id):
 
 
 @login_required
-def apagar_image(request, image_id):
-    image = get_object_or_404(Image, id=image_id, user=request.user)
+def apagar_imagem(request, imagem_id):
+    imagem = get_object_or_404(Imagem, id=imagem_id, user=request.user)
     if request.method == 'POST':
-        image.delete()
+        imagem.delete()
         return redirect('perfil')
-    return render(request, 'confirmar_delete.html', {'image': image})
+    return render(request, 'confirmar_delete.html', {'imagem': imagem})
 
 
 
