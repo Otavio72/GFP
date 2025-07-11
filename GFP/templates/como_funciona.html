@@ -3,14 +3,14 @@
 <html lang="eng">
     <head>
         <title>Como Funciona</title>
+        <!-- Link para o arquivo CSS -->
         <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
     
     <body>
 
-        
+        <!-- Cabeçalho da página com logo e botões de navegação -->
         <div class="cabecalho">
-            
             <div id="logo_box">
                 <a href="{% url 'index' %}" ><img id="logo" src="{% static 'img/logo.png' %}" alt="" width="150" height="150">
                 </a> 
@@ -19,15 +19,14 @@
             <div id="cabecalho_button">
                 <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
                 <a class="cabecalho_link" href="{% url 'como_funciona' %}">Como Funciona ?</a>
-            
+                {# Verifica se o usuário está logado para exibir o botão de logout #}
                 {% if user.is_authenticated %}
                 <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
                     {% csrf_token %}
                     <button id="btn_perfil" type="submit">
                         Perfil
                     </button>
-              </form>
-                
+                </form>
                 {% else %}
                     <a class="cabecalho_link" href="{% url 'login_view' %}">Login</a>
                     <a class="cabecalho_link" href="{% url 'register_view' %}">Register</a>
@@ -36,10 +35,9 @@
         
         </div>
 
-
+        <!-- Conteúdo principal da página -->
         <div class="conteudo_box">
-            
-
+        
             <div class="conteudo_text_box">
                 <h2 class="conteudo_text">Como Funciona ?</h2>
                 
@@ -71,6 +69,7 @@
 
         </div>
 
+        <!--Rodapé com contato e GitHub-->
         <footer class="rodape">
             <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
             <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>

@@ -16,14 +16,19 @@ from django.contrib import messages
 import os
 
 
+# Renderiza a página inicial do sistema (index.html)
 def index(request):
     return render(request, 'index.html')
 
 
+# View para editar ou excluir um boleto.
+# - Recupera o boleto pelo ID.
+# - Se o método for POST:
+#     - Se a ação for 'delete', exclui o boleto e redireciona para o perfil.
+#     - Caso contrário, atualiza os campos com os novos dados enviados.
+# - Se for GET, renderiza a página de perfil com os dados do boleto.
 @login_required
 def editar_boleto(request, id):
-    print("POST Data:", request.POST) 
-
     try:
         imagem = Imagem.objects.get(id=id)
     
@@ -60,9 +65,20 @@ def editar_boleto(request, id):
         return render(request, "perfil.html", {'imagem':imagem})
 
 
+
+# Processa o envio de um boleto e extrai seus dados via OCR:
+# - Se o método for POST:
+#     - Recebe o formulário com o tipo de conta e o arquivo enviado.
+#     - Salva a imagem na pasta /media/boletos.
+#     - Passa o caminho da imagem e o tipo da conta para o OCR.
+#     - Se os dados forem extraídos com sucesso:
+#         - Converte o valor e a data para os formatos corretos.
+#         - Salva as informações no banco de dados.
+#     - Caso contrário, exibe uma mensagem de erro e exclui a imagem.
+# - Se for GET, exibe o formulário vazio.
+# Por fim, renderiza a página 'extrair_dados.html' com os dados extraídos do usuário.
 @login_required
 def extrair_dados(request):
-    #boleto_texto = None
     ocr_data = None
     ocr_valor = None
     ocr_valor_final = None
@@ -93,11 +109,6 @@ def extrair_dados(request):
             imagem.boleto_valor = ocr_valor_final
             imagem.save()
 
-            #if os.path.isfile(caminho_imagem):
-             #   os.remove(caminho_imagem)
-              #  imagem.imagem = None
-               # imagem.save()
-
     else:
         form = ContaEImagemForm()
     
@@ -110,16 +121,24 @@ def extrair_dados(request):
         })
 
 
+# Renderiza a página Como_Funciona (como_funciona.html)
 def como_funciona(request):
     return render(request, 'como_funciona.html')
 
 
+# View para autenticação de usuários:
+# - Se método for POST:
+#     - Instancia CustomLoginForm com os dados enviados.
+#     - Se válido, faz login (via django) e redireciona para index.
+# - Se método for GET:
+#     - Cria um formulário em branco (CustomLoginForm).
+# Exibe sempre a template 'login.html' com o formulário.
 def login_view(request):
     if request.method == 'POST':
         form = CustomLoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(request, user) # funcao do django
+            login(request, user)
             return redirect('index')
     else:
         form = CustomLoginForm()
@@ -127,6 +146,13 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 
+# View responsável pelo registro de novos usuários:
+# - Se o método for POST:
+#     - Instancia o CadastroForm com os dados recebidos e valida o formulário.
+#     - Se for válido, salva o novo usuário no banco de dados e redireciona para a página de login.
+# - Se o método for GET:
+#     - Instancia um CadastroForm vazio.
+# Sempre renderiza a página de registro (register.html) com o formulário.
 def register_view(request):
     if request.method == 'POST':
         form = CadastroForm(request.POST)
@@ -138,6 +164,16 @@ def register_view(request):
     return render(request, 'register.html', {'form': form})
 
 
+
+# View da página de perfil do usuário.
+# - Recupera o usuário logado e as imagens enviadas por ele.
+# - Garante que o perfil do usuário existe usando get_or_create().
+# - Se o método for POST:
+#     - Instancia o formulário UserProfileForm com os dados recebidos.
+#     - Se o formulário for válido, salva as alterações no banco de dados e redireciona para a mesma página.
+# - Se o método for GET:
+#     - Instancia o formulário com os dados atuais do perfil do usuário.
+# Sempre renderiza a página perfil.html com os dados do usuário, suas imagens e o formulário.
 @login_required
 def perfil(request):
     usuario = request.user
@@ -163,10 +199,17 @@ def perfil(request):
     })
 
 
+
+# View para editar um boleto via AJAX (requisição assíncrona).
+# - Verifica se a requisição é do tipo POST e feita via XMLHttpRequest (AJAX).
+# - Busca a imagem correspondente ao ID informado e pertencente ao usuário logado.
+# - Instancia o formulário ImagemForm com os dados recebidos.
+# - Se o formulário for válido, salva as alterações e retorna uma resposta JSON de sucesso.
+# - Caso contrário, retorna os erros do formulário em formato JSON.
+# - Se a requisição for inválida, retorna status 'invalid'.
 @login_required
 def editar_boleto_ajax(request, imagem_id):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        #imagem_id = request.POST.get('image_id')
         imagem = get_object_or_404(Imagem, id=imagem_id,user=request.user)
         form = ImagemForm(request.POST,request.FILES, instance=imagem)
         if form.is_valid():
@@ -177,16 +220,16 @@ def editar_boleto_ajax(request, imagem_id):
     return JsonResponse({'status':'invalid'})   
 
 
+
+# Apaga a imagem do banco de dados
+# - Verifica se a imagem existe e pertence ao usuário logado
+# - Se for método POST, deleta a imagem
+# - Redireciona para a página de perfil
 @login_required
 def apagar_imagem(request, imagem_id):
     imagem = get_object_or_404(Imagem, id=imagem_id, user=request.user)
     if request.method == 'POST':
         imagem.delete()
-        return redirect('perfil')
-    return render(request, 'confirmar_delete.html', {'imagem': imagem})
-
-
-
-
-
-
+    
+    return redirect('perfil')
+    

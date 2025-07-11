@@ -3,12 +3,18 @@
 <html lang="en">
 <head>
     <title>Perfil</title>
+    <!-- CSS do swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+   
+    <!-- Script do popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-
+   
+    <!-- Link para o arquivo CSS -->
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+    
+    <!-- Cabeçalho da página com logo e botões de navegação -->
     <div class="cabecalho">
         <div id="logo_box">
             <a href="{% url 'index' %}">
@@ -18,6 +24,7 @@
         <div id="cabecalho_button">
             <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
             <a class="cabecalho_link" href="{% url 'como_funciona' %}">Como Funciona ?</a>
+            {# Verifica se o usuário está logado para exibir o botão de logout #}
             {% if user.is_authenticated %}
                 <form id="form_perfil" method="POST" action="{% url 'login_view' %}">
                     {% csrf_token %}
@@ -30,12 +37,12 @@
         </div>
     </div>
 
-    
+    <!-- Perfil do usuario logado -->
     <div class="perfil_box">
         <div class="perfil">
             <div class="img_box">
                 <h2>Perfil de: {{ usuario.username }}</h2>
-
+                {# Verifica se o user possui imagem de perfil #}
                 {% if usuario.userprofile.profile_pics %}
                     <img class="imgredondo" src="{{ usuario.userprofile.profile_pics.url }}" alt="Foto de perfil">
                 {% else %}
@@ -43,6 +50,7 @@
                 {% endif %}
             </div>
 
+            {# formulario de envio da imagem de perfil #}
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
 
@@ -57,9 +65,8 @@
                 </div>
             </form>
 
-
+            <!-- informações do usuario logado -->
             <div  class="perfil_text">
-                
                 <p>Nome: {{ usuario.username }}</p>
                 <p>Email: {{ usuario.email }}</p>
                 <p>Entrou em: {{ usuario.date_joined|date:"d/m/Y H:i" }}</p>
@@ -68,7 +75,7 @@
         </div>
     </div>
 
-
+        <!-- Historico de boletos ja envidados -->
         <div class="boleto-box">
             <div class="swiper Swiper_perfil">
                 <div class="swiper-wrapper">
@@ -90,6 +97,7 @@
                                         </div>
 
                                         <div class="modal-body">
+                                            {# Formulario de edição dos boletos já enviados #}
                                             <form id="form-{{ img.id }}" method="POST" action="{% url 'editar_boleto' img.id %}" class="edit-form" enctype="multipart/form-data">
                                                 {% csrf_token %}
                                                 <input type="hidden" name="image_id" value="{{ img.id }}">
@@ -126,21 +134,24 @@
             </div>
         </div>
     
-
+    <!--Rodapé com contato e GitHub-->
     <footer class="rodape">
         <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
         <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>
     </footer> 
 
+    <!-- Script para apagarBoleto -->
     <script>
         function apagarBoleto(){
             document.getElementById('action_type').value = 'delete';
             document.getElementById("form-{{ img.id }}").submit();
         }
-        document.getElementById("form-{{ img.id }}").addEventListener("submit", function(event){
-        })
     </script>
+    
+    <!-- Script para swiper -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    
+    <!-- Script para js personalizado -->
     <script src="{% static 'js/perfil.js' %}"></script>
 </body>
 </html>

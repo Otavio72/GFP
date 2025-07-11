@@ -4,9 +4,13 @@
   <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    
+    <!-- Link para o arquivo CSS -->
     <link rel="stylesheet" href="{% static 'style.css' %}">
   </head>
   <body>
+
+        <!-- Cabeçalho da página com logo e botões de navegação -->
         <div class="cabecalho">
             <div id="logo_box">
                 <a href="{% url 'index' %}" ><img id="logo" src="{% static 'img/logo.png' %}" alt="">
@@ -17,12 +21,14 @@
                     <a class="cabecalho_link" href="{% url 'register_view' %}">Register</a>
             </div>
         </div>
-
+      
+    <!-- Imagem de fundo e caixa de login -->
     <div class="wallpaper_grande">
             
         <div class="login_box">
             <h1>Log in</h1>
-            
+
+            {# Formulario de login de usuario #}
             <form class="login_form" method ='POST'>
               {% csrf_token %}
               {{ form.username }}
@@ -30,16 +36,17 @@
               <div class="login_button_container"> 
                 <button type="submit" class="btn">Login</button>
               </div>
-
             </form>
 
+            <!-- Link para a pagina de registro -->
             <div class="registro_link">
                 <h4>Nao é membro ? <a href="{% url 'register_view' %}">Registre-se</a></h4>
                 
             </div>
         </div>
     </div>
-
+        
+        <!--Rodapé com contato e GitHub-->
         <footer class="rodape">
             <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
             <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>

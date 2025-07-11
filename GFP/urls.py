@@ -22,11 +22,12 @@ from django.conf.urls.static import static
 from upload import views
 from django.contrib.auth.views import LogoutView
 
+# Rotas para as paginas do site
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('index', permanent=True)),
     path('index/', views.index, name='index'),
-    path('editar_boleto_ajax/', views.editar_boleto_ajax, name='editar_boleto_ajax'),
+    path('editar_boleto_ajax/', views.editar_boleto_ajax, name='editar_boleto_ajax'), # Inicia o AJAX do editar boleto
     path('login_view/', views.login_view, name='login_view'),
     path('perfil/', views.perfil, name='perfil'),
     path('editar_boleto/<int:id>/', views.editar_boleto, name='editar_boleto'),

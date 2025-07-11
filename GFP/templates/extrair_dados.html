@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CSS do swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    
+    <!-- Link para o arquivo CSS -->
     <link rel="stylesheet" href="{% static 'style.css' %}">
-
     
     <title>GFP</title>
 </head>
 <body>
     
+    <!-- Cabeçalho da página com logo e botões de navegação -->
     <div class="cabecalho">
             
         <div id="logo_box">
@@ -22,7 +26,7 @@
         <div id="cabecalho_button">
             <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
             <a class="cabecalho_link" href="{% url 'como_funciona' %}">Como Funciona ?</a>
-        
+            {# Verifica se o usuário está logado para exibir o botão de logout #}
             {% if user.is_authenticated %}
             <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
                 {% csrf_token %}
@@ -30,16 +34,15 @@
                     Perfil
                 </button>
           </form>
-            
+
             {% else %}
                 <a class="cabecalho_link" href="{% url 'login_view' %}">Login</a>
                 <a class="cabecalho_link" href="{% url 'register_view' %}">Register</a>
             {% endif %}
         </div>
-    
     </div>
 
-
+    <!-- Conteúdo principal da página -->
     <div class="conteudo_box">
         <div class="conteudo_text_box">
             <h2 class="conteudo_text">Envio de Boleto para OCR</h2>
@@ -52,7 +55,7 @@
             </p>
         </div>
 
-
+                {# area de envio da imagem #}
             <div class="forms_box">
                 <form id="uploadForm" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
@@ -71,7 +74,7 @@
     {% endif %}
             
         </div>
-
+            <!-- graficos do swiper -->
             <div class="conteudo_grafico_box">
                 <div class="swiper Swiper_extrair_dados">
                     <div class="swiper-wrapper">
@@ -97,14 +100,20 @@
 
         {{ dados_extraidos|json_script:"dados_extraidos" }}
 
+        <!--Rodapé com contato e GitHub-->
         <footer class="rodape">
             <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
             <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>
         </footer> 
 
         </div>
+        <!-- Script para js personalizado -->
         <script src="{% static 'js/extrair_dados.js' %}"></script>
+        
+        <!-- Script para swiper -->
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+        
+        <!-- Script para chart -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

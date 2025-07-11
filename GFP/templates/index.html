@@ -3,9 +3,12 @@
 <html lang="eng">
     <head>
         <title>GFP</title>
+        <!-- Link para o arquivo CSS -->
         <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
     
-        
+    <body>
+        <!-- Cabeçalho da página com logo e botões de navegação -->
         <div class="cabecalho">
             <div id="logo_box">
                 <a href="{% url 'index' %}" ><img id="logo" src="{% static 'img/logo.png' %}" alt="">
@@ -15,7 +18,7 @@
             <div id="cabecalho_button">
                 <a class="cabecalho_link" href="{% url 'extrair_dados' %}">Testar</a>
                 <a class="cabecalho_link" href="{% url 'como_funciona' %}">Como Funciona ?</a>
-            
+                {# Verifica se o usuário está logado para exibir o botão de logout #}
                 {% if user.is_authenticated %}
                     <form id="form_perfil" method="POST" action="{% url 'perfil' %}">
                         {% csrf_token %}
@@ -30,10 +33,9 @@
                 {% endif %}
             </div>
         </div>
-    </head>
-
-    <body>
-
+    
+        
+        <!-- Conteúdo principal da página -->
         <div class="conteudo_box">
             
             <div class="conteudo_img_box">
@@ -73,6 +75,7 @@
         </div>
         </div>
 
+        <!--Rodapé com contato e GitHub-->
         <footer class="rodape">
             <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
             <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+# Lista de tipos de boleto recebidos e usados para seleção no formulário
 tipo_conta = [
     ('CPFL', 'CPFL'),
     ('Naturgy', 'Naturgy'),
@@ -9,7 +10,7 @@ tipo_conta = [
     ('Vivo', 'Vivo'),
 ]
 
-
+# Model que armazena os dados extraidos e selecionados referentes aos boletos enviados
 class Imagem(models.Model):
     imagem = models.ImageField(upload_to='boletos/')
     description = models.TextField(null=True, blank=True)
@@ -24,7 +25,7 @@ class Imagem(models.Model):
     class Meta:
         ordering = ['boleto_data']
 
-
+# Model que adiciona campos adicionais no UserProfile
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pics = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg')

@@ -4,10 +4,13 @@
   <head>
     <meta charset="UTF-8">
     <title>Registre-se</title>
+    <!-- Link para o arquivo CSS -->
     <link rel="stylesheet" href="{% static 'style.css' %}">
   </head>
   <body>
-        <div class="cabecalho">
+        
+    <!-- Cabeçalho da página com logo e botões de navegação -->
+    <div class="cabecalho">
             <div id="logo_box">
                 <a href="{% url 'index' %}" ><img id="logo" src="{% static 'img/logo.png' %}" alt="">
                 </a> 
@@ -16,13 +19,14 @@
                     <a class="cabecalho_link" href="{% url 'login_view' %}">Login</a>
                     <a class="cabecalho_link" href="{% url 'register_view' %}">Register</a>
             </div>
-        </div>
+    </div>
 
+     <!-- Imagem de fundo e caixa de registro -->
     <div class="wallpaper_grande">
-            
         <div class="register_box">
             <h2>Registre-se</h2>
             
+          {# Formulario de Registro de usuario #}
           <form class="register_form" method='POST'>
               {% csrf_token %}
               <p>🔹 Escolha um nome de usuário sem espaços (ex: joaosilva, maria_123).</p>
@@ -30,6 +34,7 @@
               {{ form.email}}
               {{ form.password1}}
 
+            <!-- Regras para senha -->
             <div class="senha-regras">
                 <p>🔒 Sua senha deve:</p>
                 <ul>
@@ -46,6 +51,7 @@
         </div>
     </div>
 
+        <!--Rodapé com contato e GitHub-->
         <footer class="rodape">
             <p>Confira meu GitHub: <a href="https://github.com/Otavio72">Otavio72</a></p>
             <p>© 2025 Otávio Ribeiro. Todos os direitos reservados.</p>

@@ -7,4 +7,4 @@ class UploadConfig(AppConfig):
 
 
     def ready(self):
-        import upload.signals  # substitua 'upload' pelo nome do seu app
+        import upload.signals 
