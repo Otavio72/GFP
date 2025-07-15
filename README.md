@@ -1,6 +1,6 @@
 # 🖨️ Impressa
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Otavio72/Impressa/blob/main/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Otavio72/GFP/blob/main/LICENSE)
 
 **Impressa** é uma aplicação web full stack desenvolvida para facilitar o processo de orçamentos e pedidos de impressão de documentos. O projeto nasceu após minha família e eu utilizarmos serviços de terceiros e percebermos a viabilidade de termos nossa própria gráfica.
 
