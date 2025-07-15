@@ -26,4 +26,4 @@ db.sqlite3
 Thumbs.db
 
 # Mídia e uploads
-/boletos/
+media/boletos/
