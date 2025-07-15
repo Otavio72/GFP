@@ -66,19 +66,8 @@ O GFP permite o envio de boletos das empresas CPFL, Energisa, Naturgy e VIVO. Os
 Este projeto utiliza o pytesseract, um wrapper Python para o Tesseract OCR, que precisa estar instalado no seu sistema operacional para funcionar corretamente.
 
 🪟 Windows
-1 - Baixe o instalador recomendado:
+    Baixe o instalador recomendado:
 👉 [🔗 Tesseract](https://github.com/UB-Mannheim/tesseract/wiki)
-
-2 - Instale o Tesseract e anote o caminho de instalação, geralmente:
-  ```makefile
-  C:\Program Files\Tesseract-OCR\tesseract.exe
-  ```
-
-3 - No seu código Python, configure o caminho para o executável:
-  ```python
-  import pytesseract
-  pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR
-  ```
 
 🐧 Linux (Debian/Ubuntu)
   ```bash
@@ -90,7 +79,6 @@ Este projeto utiliza o pytesseract, um wrapper Python para o Tesseract OCR, que 
 ```bash
   brew install tesseract
 ```
-
 
 ### 📦 Instalação
 
