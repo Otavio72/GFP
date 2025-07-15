@@ -25,7 +25,7 @@ class Imagem(models.Model):
     class Meta:
         ordering = ['boleto_data']
 
-# Model que adiciona campos adicionais no UserProfile
+# Model que adiciona campos adicionais no User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pics = models.ImageField(upload_to='profile_pics/', default='profile_pics/default.jpg')
