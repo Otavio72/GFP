@@ -1,41 +1,44 @@
-# 🖨️ Impressa
+# 💸 Gerenciador de Finanças Pessoais (GFP)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/Otavio72/GFP/blob/main/LICENSE)
 
-**Impressa** é uma aplicação web full stack desenvolvida para facilitar o processo de orçamentos e pedidos de impressão de documentos. O projeto nasceu após minha família e eu utilizarmos serviços de terceiros e percebermos a viabilidade de termos nossa própria gráfica.
+**GFP** é uma aplicação web full stack desenvolvida para facilitar o gerenciamento e visualização de contas por meio de gráficos, com extração automática de dados e edição de boletos enviados.
 
 ---
 
 ## 🛠️ Sobre o projeto
 
-Impressa permite que usuários enviem documentos nos formatos **PDF**, **PNG** e **JPEG**, com orçamentos automáticos baseados na quantidade de páginas e nas configurações escolhidas.
+O GFP permite o envio de boletos das empresas CPFL, Energisa, Naturgy e VIVO. Os dados desses boletos são extraídos via OCR, seguidos de uma filtragem com **expressões regulares** para capturar apenas o valor e a data do documento. Por fim, os dados são exibidos em três gráficos utilizando a biblioteca Chart.js.
 
-### Funcionalidades principais:
+### Funcionalidades principais
 
-- 🧾 Orçamentos automatizados
-- 🛒 Carrinho de compras e checkout simulado
-- 🔐 Sistema de login e registro de usuários
-- 📚 Histórico de pedidos
-- 🌙 Modo escuro
-- 🧑‍💼 Painel de perfil e edição de usuário
+- 🧾 Extração automática de dados via OCR  
+- 🔐 Login e registro de usuários  
+- 📚 Histórico de boletos enviados  
+- 🧑‍💼 Painel de perfil e edição de boletos  
 
 ---
 
 ## 💻 Layout da aplicação
 
-### Página inicial e orçamento
-![Página Inicial](https://github.com/Otavio72/assets/blob/main/impressa1.png)
-![Orçamento](https://github.com/Otavio72/assets/blob/main/impressa4.png)
+### Página inicial 
+![Página Inicial 1](https://github.com/Otavio72/assets/blob/main/gfp1.png)
+![Página Inicial 2](https://github.com/Otavio72/assets/blob/main/gfp2.png)
 
-### Sobre o projeto e modo escuro
-![Sobre o projeto](https://github.com/Otavio72/assets/blob/main/impressa5.png)
-![Modo escuro](https://github.com/Otavio72/assets/blob/main/impressaescuro.png)
+### Como funciona o envio de boletos
+![Envio de boletos](https://github.com/Otavio72/assets/blob/main/gfp3.png)
+
+### GIF
+![GIF](https://github.com/Otavio72/assets/blob/main/GFP_gif.gif)
+
+### Como funciona (detalhado)
+![Como Funciona](https://github.com/Otavio72/assets/blob/main/gfp4.png)
 
 ---
 
 ## 🗂️ Modelo conceitual
 
-![Modelo Conceitual](https://github.com/Otavio72/assets/blob/main/modelo_impressa.png)
+![Modelo Conceitual](https://github.com/Otavio72/assets/blob/main/modeloGFPFinal.png)
 
 ---
 
@@ -49,7 +52,6 @@ Impressa permite que usuários enviem documentos nos formatos **PDF**, **PNG** e
 - HTML
 - CSS
 - JavaScript
-- Bootstrap 5
 
 ---
 
@@ -64,7 +66,7 @@ Impressa permite que usuários enviem documentos nos formatos **PDF**, **PNG** e
 
 ```bash
 # clonar repositório
-git clone https://github.com/Otavio72/Impressa
+git clone https://github.com/Otavio72/GFP.git
 
 Ative o ambiente virtual:
   python -m venv .venv
@@ -88,11 +90,11 @@ Acesse o projeto no navegador:
 http://127.0.0.1:8000/
 ```
 👤 Como acessar o sistema
-Para acessar o Impressa, faça seu cadastro:
-1. Acesse: http://127.0.0.1:8000/usuarios/register/
+Para acessar o GFP, faça seu cadastro:
+1. Acesse: http://127.0.0.1:8000/register_view/
 2. Preencha o formulário de cadastro
-3. Após o registro, você será redirecionado para a página inicial
+3. Após o registro, você será redirecionado para a página de login
 
 # Autor
 Otávio Ribeiro
-www.linkedin.com/in/otávio-ribeiro-57a359197
+[🔗 LinkedIn](https://www.linkedin.com/in/otávio-ribeiro-57a359197)
