@@ -114,6 +114,14 @@ Para acessar o GFP, faça seu cadastro:
 2. Preencha o formulário de cadastro
 3. Após o registro, você será redirecionado para a página de login
 
+📁 Boletos de teste
+Dentro do diretório:
+
+```makefile
+C:\Users\otavi\OneDrive\Área de Trabalho\COMPUTADOR\PROJETO\CFP\GFP\boletos_para_teste
+```
+Você encontrará alguns boletos para teste da aplicação.
+
 # Autor
 Otávio Ribeiro
 [🔗 LinkedIn](https://www.linkedin.com/in/otávio-ribeiro-57a359197)
