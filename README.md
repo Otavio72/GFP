@@ -22,23 +22,23 @@ O GFP permite o envio de boletos das empresas CPFL, Energisa, Naturgy e VIVO. Os
 ## 💻 Layout da aplicação
 
 ### Página inicial 
-![Página Inicial 1](https://github.com/Otavio72/assets/blob/main/gfp1.png)
-![Página Inicial 2](https://github.com/Otavio72/assets/blob/main/gfp2.png)
+![Página Inicial 1](assets/gfp1.png)
+![Página Inicial 2](assets/gfp2.png)
 
 ### Como funciona o envio de boletos
-![Envio de boletos](https://github.com/Otavio72/assets/blob/main/gfp3.png)
+![Envio de boletos](assets/gfp3.png)
 
 ### GIF
-![GIF](https://github.com/Otavio72/assets/blob/main/GFP_gif.gif)
+![GIF](assets/GFP_gif.gif)
 
 ### Como funciona
-![Como Funciona](https://github.com/Otavio72/assets/blob/main/gfp4.png)
+![Como Funciona](assets/gfp4.png)
 
 ---
 
 ## 🗂️ Modelo conceitual
 
-![Modelo Conceitual](https://github.com/Otavio72/assets/blob/main/modeloGFPFinal.png)
+![Modelo Conceitual](assets/modeloGFPFinal.png)
 
 ---
 
