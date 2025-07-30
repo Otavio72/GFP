@@ -124,4 +124,4 @@ Você encontrará alguns boletos para teste da aplicação.
 
 # Autor
 Otávio Ribeiro
-[🔗 LinkedIn](https://www.linkedin.com/in/otávio-ribeiro-57a359197)
+[🔗LinkedIn](https://www.linkedin.com/in/otávio-ribeiro-57a359197)
