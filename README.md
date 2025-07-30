@@ -118,7 +118,7 @@ Para acessar o GFP, faça seu cadastro:
 Dentro do diretório:
 
 ```makefile
-C:\Users\otavi\OneDrive\Área de Trabalho\COMPUTADOR\PROJETO\CFP\GFP\boletos_para_teste
+GFP\boletos_para_teste
 ```
 Você encontrará alguns boletos para teste da aplicação.
 
